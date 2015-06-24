@@ -4,15 +4,24 @@
   "description": "Mobile device allocation management",
   "main": "src/index.js",
   "scripts": {
+    "start": "node src/index.js",
     "test": "mocha test"
+  },
+  "dependencies": {
+    "express": "~4.13.0",
+    "body-parser": "~1.13.1",
+    "moment": "~2.10.3",
+    "jwt-simple": "~0.3.0"
+  },
+  "engines": {
+    "node": ">=0.10.0"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/Susovan87/MDAM.git"
   },
   "keywords": [
-    "device",
-    "allocation"
+    "device allocation"
   ],
   "author": "",
   "license": "ISC",

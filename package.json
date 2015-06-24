@@ -1,0 +1,23 @@
+{
+  "name": "MDAM",
+  "version": "0.1.0",
+  "description": "Mobile device allocation management",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "mocha test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Susovan87/MDAM.git"
+  },
+  "keywords": [
+    "device",
+    "allocation"
+  ],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Susovan87/MDAM/issues"
+  },
+  "homepage": "https://github.com/Susovan87/MDAM"
+}

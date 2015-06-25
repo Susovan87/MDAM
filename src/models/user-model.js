@@ -8,6 +8,7 @@ var UserModel = function () {
 UserModel.prototype.findByEmail = function(email, callback) {
 	var user;
 	var err = ''
+	
 	if(email){
 		if(email == 'a'){	// mock
 			user = { email:'a', name: 'A', id: 1 }
@@ -36,16 +37,18 @@ UserModel.prototype.validCredentials = function(authObj, callback) {
 	var err = ''
 	if(authObj.email && authObj.password){
 		this.findByEmail(authObj.email, function(err, user){
-			var expires = moment().add('days', 7).valueOf();
+			var expires = moment().add(7,'days').valueOf();
 			var token = jwt.encode({
 			  iss: user.id,
 			  expires: expires
-			}, jwtTokenSecret);
+			}, secret.jwtTokenSecret);
 
 			result = {
 					  token : token,
-					  expires: expires,
-					  user: user.toJSON()
+					  expires: expires
+					  //,
+					  //user: user.toJSON()
+					 // user: user
 					};
 		});
 	}else{

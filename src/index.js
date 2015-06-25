@@ -1,13 +1,13 @@
 var express    = require("express");
 var bodyParser = require("body-parser");
-var methodOverride = require('method-override');
+
 var app        = express();
 
 var port = process.env.PORT || 3001;
-var UserModel = require('./models/user-model');
+var UserModel = require('./models/user-model.js');
 var SecureRoute = require('./secure-route');
 var ErrorHandler = require('./error-handler');
-
+var user = new UserModel();
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
@@ -25,7 +25,8 @@ app.use(ErrorHandler.errorHandler);
 */
 
 app.post('/authenticate', function(req, res) {
-    UserModel.authenticate({email: req.body.email, password: req.body.password}, function(err, user) {
+    console.log(req.body.email)
+    user.validCredentials({email: req.body.email, password: req.body.password}, function(err, user) {
         if (err) {
             res.json({
                 type: false,
@@ -35,7 +36,7 @@ app.post('/authenticate', function(req, res) {
             if (user) {
                res.json({
                     type: true,
-                    data: user,
+                   // data: user,
                     token: user.token
                 }); 
             } else {

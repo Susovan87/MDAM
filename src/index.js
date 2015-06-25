@@ -4,52 +4,24 @@ var bodyParser = require("body-parser");
 var app        = express();
 
 var port = process.env.PORT || 3001;
-var UserModel = require('./models/user-model.js');
-var SecureRoute = require('./secure-route');
 var ErrorHandler = require('./error-handler');
-var user = new UserModel();
+
+var errorHandler =  new ErrorHandler();
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 app.use(function(req, res, next) {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
-    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type, Authorization');
+    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type,x-access-token');
     next();
 });
 
-/*
-app.use(ErrorHandler.logErrors);
-app.use(ErrorHandler.clientErrorHandler);
-app.use(ErrorHandler.errorHandler);
-*/
+app.use(errorHandler.logErrors);
+app.use(errorHandler.clientErrorHandler);
+app.use(errorHandler.errorHandler);
 
-app.post('/authenticate', function(req, res) {
-    console.log(req.body.email)
-    user.validCredentials({email: req.body.email, password: req.body.password}, function(err, user) {
-        if (err) {
-            res.json({
-                type: false,
-                data: "Error occured: " + err
-            });
-        } else {
-            if (user) {
-               res.json({
-                    type: true,
-                   // data: user,
-                    token: user.token
-                }); 
-            } else {
-                res.json({
-                    type: false,
-                    data: "Incorrect email/password"
-                });    
-            }
-        }
-    });
-});
-
-//app.all('/api/*', [express.bodyParser(), SecureRoute]);
+var router = require('./routers/router')(app);
 
 process.on('uncaughtException', function(err) {
     console.log(err);
@@ -57,5 +29,5 @@ process.on('uncaughtException', function(err) {
 
 // Start Server
 app.listen(port, function () {
-    console.log( "Express server listening on port " + port);
+    console.log( "server listening on port " + port);
 });

@@ -2,21 +2,19 @@
   "name": "MDAM",
   "version": "0.1.0",
   "description": "Mobile device allocation management",
-  "main": "src/index.js",
   "scripts": {
-    "start": "node src/index.js",
+    "start": "node ./src/bin/www",
     "test": "mocha test"
   },
   "dependencies": {
-   "body-parser": "~1.13.1",
-    "bookshelf": "^0.8.1",
+    "body-parser": "~1.13.1",
     "express": "~4.13.0",
     "jwt-simple": "~0.3.0",
-    "knex": "^0.8.6",
-    "lodash": "^3.9.3",
     "moment": "~2.10.3",
     "sqlite3": "^3.0.8",
-    "when": "^3.7.3"
+    "sequelize": "~3.3.2",
+    "debug": "~2.2.0",
+    "morgan": "~1.6.0"
   },
   "engines": {
     "node": ">=0.10.0"

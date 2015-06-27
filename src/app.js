@@ -4,7 +4,7 @@ var logger      = require('morgan');
 var cookieParser = require('cookie-parser');
 var app         = express();
 var debug       = require('debug')('app');
-
+var path        = require('path');
 var port = process.env.PORT || 3001;
 
 app.use(logger('dev'));
@@ -16,7 +16,7 @@ app.use(function(req, res, next) {
     res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type,x-access-token');
     next();
 });
-
+app.use(express.static(path.join(__dirname,'../app')));
 var router = require('./routers/router')(app);
 
 // catch 404 and forward to error handler

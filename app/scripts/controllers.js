@@ -12,7 +12,7 @@ angular.module('angularRestfulAuth')
 .controller('LoginController',['$rootScope','$scope','$location','$localStorage','$window','Main',function($rootScope, $scope, $location, $localStorage,$window,Main){
     $scope.signin = function() {
             var formData = {
-                email: $scope.email,
+                identity: $scope.identity,
                 password: $scope.password
             }
             Main.signin(formData, function(res) {
@@ -21,7 +21,7 @@ angular.module('angularRestfulAuth')
                 } else {
                     $localStorage.token = res.token;
                     $rootScope.token = $localStorage.token
-                   $location.path('/me');    
+                    $location.path('/me');    
                 }
             }, function() {
                 $rootScope.error = 'Failed to signin';
@@ -50,9 +50,7 @@ angular.module('angularRestfulAuth')
 
 .controller('MeCtrl', ['$rootScope', '$scope', '$location','$localStorage','$http','Main', function($rootScope, $scope, $location,$localStorage ,$http,Main) {
         Main.me(function(res) {
-            $scope.user = res;
-            if(!$scope.email)
-                $scope.email = '-';
+            $scope.user = res[0];
         }, function(err) {
             $rootScope.error = 'Failed to fetch details';
             console.error(err)

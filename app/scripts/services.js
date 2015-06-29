@@ -2,7 +2,7 @@
 
 angular.module('angularRestfulAuth')
     .factory('Main', ['$http', '$localStorage', function($http, $localStorage){
-        var baseUrl = "http://localhost:3001";
+        var baseUrl = "http://localhost:3000";
         /*function changeUser(user) {
             angular.extend(currentUser, user);
         }*/

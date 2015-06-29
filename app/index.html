@@ -12,7 +12,7 @@
     <!-- Bootstrap core CSS -->
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="/lib/loading-bar.css">
-
+   <!-- <link rel="stylesheet" type="text/css" href="/lib/custom.css">-->
     <style>
         body {
             padding-top: 60px;
@@ -41,6 +41,14 @@
                 </button>
                 <a class="navbar-brand" href="#">MDAM</a>
             </div>
+            <ul class="nav navbar-nav navbar-right">
+               <li data-ng-show="token">
+                 <p>Hi </p><a href="#/me" >{{name}}</a>
+               </li>
+               <li data-ng-show="token">
+                 <a href="#/logut" >Logout</a>
+               </li>
+            </ul>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li><a ng-href="#/">Home</a></li>
@@ -52,14 +60,33 @@
             </div><!--/.nav-collapse -->
         </div>
     </div>
-    <div class="container" ng-view>
-
-    </div> <!-- /container -->
+    <div class="row">
+        <nav class="col-xs-3 bs-docs-sidebar" data-ng-show="token">
+            <div class="panel panel-primary">
+                    <div class="panel-heading">Options</div>
+                        <ul id="sidebar" class="nav nav-stacked">
+                            <li>
+                                <a href="#GroupA">Group A</a>
+                            </li>
+                            <li>
+                                <a href="#GroupB">Group B</a>
+                            </li>
+                            <li>
+                                <a href="#GroupC">Group C</a>
+                            </li>
+                        </ul>
+            </div>
+        </nav>
+        <div ng-view></div>
+    </div>
+      
+     <!-- /container -->
 
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.20/angular.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.20/angular-route.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.15/angular-ui-router.min.js"></script>
 <script src="/lib/ngStorage.js"></script>
 <script src="/lib/loading-bar.js"></script>
 <script src="/scripts/app.js"></script>

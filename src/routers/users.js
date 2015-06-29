@@ -11,7 +11,6 @@ router.get('/', function(req, res) {
       res.send(users);
     });
 });
-
 router.get('/:userId', function(req, res) {
   models.User.find({
     where: {
@@ -21,7 +20,6 @@ router.get('/:userId', function(req, res) {
       res.send(user.getJsonData());
     });
 });
-
 router.post('/', function(req, res) {
   if(req.user['isAdmin']){
     models.User.create({

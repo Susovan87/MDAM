@@ -6,6 +6,10 @@ angular.module('angularRestfulAuth')
     .controller('HomeCtrl', ['$rootScope', '$scope', '$location', '$localStorage', 'Main','$window', function($rootScope, $scope, $location, $localStorage, Main,$window) {
         $scope.logout = function() {
           delete $localStorage.token
+          delete $localStorage.id
+          delete $localStorage.name
+          delete $localStorage.userName
+          delete $localStorage.email
           $rootScope.token = $localStorage.token
         };
     }])
@@ -20,7 +24,12 @@ angular.module('angularRestfulAuth')
                     alert(res.data)    
                 } else {
                     $localStorage.token = res.token;
+                    $localStorage.id  = res.id;
+                    $localStorage.name = res.name;
+                    $localStorage.userName = res.userName;
+                    $localStorage.email = res.email;
                     $rootScope.token = $localStorage.token
+
                     $location.path('/me');    
                 }
             }, function() {
@@ -47,12 +56,11 @@ angular.module('angularRestfulAuth')
             })
         };
     }])
-
 .controller('MeCtrl', ['$rootScope', '$scope', '$location','$localStorage','$http','Main', function($rootScope, $scope, $location,$localStorage ,$http,Main) {
-        Main.me(function(res) {
-            $scope.user = res[0];
-        }, function(err) {
-            $rootScope.error = 'Failed to fetch details';
-            console.error(err)
-        })
+        if(!$localStorage.token)
+            $location.path('/home');
+        $scope.name = $localStorage.name;
+        $scope.email = $localStorage.email;
+        $scope.id = $localStorage.id;
+        $scope.userName = $localStorage.userName;
 }]);

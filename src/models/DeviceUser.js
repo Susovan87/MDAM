@@ -15,7 +15,6 @@ module.exports = function(sequelize, DataTypes) {
 		},
 		nextId: {
 			type: DataTypes.INTEGER
-			
 		}
 	}, {
 		timestamps: false,
@@ -25,6 +24,11 @@ module.exports = function(sequelize, DataTypes) {
 		          as: 'next'
 		        });
 			}
+		},
+		defaultScope: {
+		    where: {
+		      nextId: null
+		    }
 		}
 	});
 

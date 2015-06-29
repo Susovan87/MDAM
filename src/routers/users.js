@@ -1,52 +1,88 @@
-var models  = require('../models');
+var models = require('../models');
 var express = require('express');
 var router = express.Router();
-var debug     = require('debug')('MDAM:router:users');
+var debug = require('debug')('MDAM:router:users');
 
 router.get('/', function(req, res) {
-  models.User.findAll()
-  .then(function(users) {
-    res.send(users);
-  });
+  models.User.findAll({
+    attributes: ['id','name','userName','email']
+  })
+    .then(function(users) {
+      res.send(users);
+    });
+});
+
+router.get('/:userId', function(req, res) {
+  models.User.find({
+    where: {
+      id: req.params.userId
+    },attributes: ['id','name','userName','email']
+  }).then(function(users) {
+      res.send(users);
+    });
 });
 
 router.post('/', function(req, res) {
-  debug(req.body)
-  models.User.create({
-    userName: req.body.userName,
-    name: req.body.name,
-    email: req.body.email
-  }).then(function(user) {
-    res.status(201).send(user);
-  }).catch(function(err) {
-  	res.status(400).send(err.message);
-  });
+  if(req.user['isAdmin']){
+    models.User.create({
+      userName: req.body.userName,
+      name: req.body.name,
+      email: req.body.email,
+      password: req.body.password
+    }).then(function(user) {
+      if(user){
+        user = user.toJSON();
+        delete user['password'];
+        delete user['createdAt'];
+        delete user['updatedAt'];
+        delete user['deletedAt'];
+        res.status(201).send(user);
+      }else{
+        res.status(400).send('Failed to create user, please try after some time.');
+      }
+    }).catch(function(err) {
+      res.status(400).send(err.message);
+    });
+  }else{
+    res.status(401).send('Only admin can do this operation.');
+  }
 });
 
 router.put('/:userId', function(req, res) {
-  models.User.build({
-  	id: req.params.userId,
-  	email: req.body.email,
-  	userName: req.body.userName,
-	name: req.body.name
-  }).save()
-  .then(function() {
-	res.status(204).end();
-  }).catch(function(err) {
-  	res.status(400).send(err.message);
-  });
+  debug(req.user)
+  if(req.user['isAdmin'] || req.user['id']==req.params.userId){
+    models.User.update({
+      email: req.body.email,
+      userName: req.body.userName,
+      name: req.body.name
+    }, {
+      where: {
+        id: req.params.userId
+      }
+    }).then(function() {
+      res.status(204).end();
+    }).catch(function(err) {
+      res.status(400).send(err.message);
+    });
+  }else{
+    res.status(401).send('Only admin or same user can do this operation.');
+  }
 });
 
 router.delete('/:userId', function(req, res) {
-  models.User.destroy({
-  	where: {
-  		id: req.params.userId
-  	}
-  }).then(function(affectedRows) {
-    res.status(204).end();
-  }).catch(function(err) {
-  	res.status(400).send(err.message);
-  });
+  if(req.user['isAdmin'] || req.user['id']==req.params.userId){
+    models.User.destroy({
+      where: {
+        id: req.params.userId
+      }
+    }).then(function(affectedRows) {
+      res.status(204).end();
+    }).catch(function(err) {
+      res.status(400).send(err.message);
+    });
+  }else{
+    res.status(401).send('Only admin or same user can do this operation.');
+  }
 });
 
 module.exports = router;

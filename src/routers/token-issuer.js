@@ -1,14 +1,12 @@
 var express = require('express');
 var router = express.Router();
-var UserDAL = require('../dal/user-dal');
+var models = require('../models');
 var jwt = require('jwt-simple');
 var secret = require('../config/secret');
 var moment = require('moment');
 
-var userDAL = new UserDAL();
-
 router.post('/', function (req, res) {
-    userDAL.matchCredential({email: req.body.email, password: req.body.password}, function(err, userId) {
+    models.User.matchCredential(req.body.identity, req.body.password, function(err, userId) {
         if (err) {
             res.status(400).json({
                 type: false,

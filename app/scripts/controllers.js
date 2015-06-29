@@ -12,7 +12,7 @@ angular.module('angularRestfulAuth')
 .controller('LoginController',['$rootScope','$scope','$location','$localStorage','$window','Main',function($rootScope, $scope, $location, $localStorage,$window,Main){
     $scope.signin = function() {
             var formData = {
-                email: $scope.email,
+                identity: $scope.identity,
                 password: $scope.password
             }
             Main.signin(formData, function(res) {
@@ -21,18 +21,38 @@ angular.module('angularRestfulAuth')
                 } else {
                     $localStorage.token = res.token;
                     $rootScope.token = $localStorage.token
-                   $location.path('/me');    
+                    $location.path('/me');    
                 }
             }, function() {
                 $rootScope.error = 'Failed to signin';
             })
         };
     }])
+.controller('SignupController',['$rootScope','$scope','$location','$localStorage','$window','Main',function($rootScope, $scope, $location, $localStorage,$window,Main){
+   $scope.signup = function() {
+            var formData = {
+                email: $scope.email,
+                password: $scope.password
+            }
+
+            Main.save(formData, function(res) {
+                if (res.type == false) {
+                    alert(res.data)
+                } else {
+                    $localStorage.token = res.data.token;
+                    window.location = "/"    
+                }
+            }, function(err) {
+                $rootScope.error = 'Failed to signup ' + err;
+            })
+        };
+    }])
+
 .controller('MeCtrl', ['$rootScope', '$scope', '$location','$localStorage','$http','Main', function($rootScope, $scope, $location,$localStorage ,$http,Main) {
         Main.me(function(res) {
-            console.log(res+"Hellllloooooo");
-        }, function() {
+            $scope.user = res[0];
+        }, function(err) {
             $rootScope.error = 'Failed to fetch details';
-            console.log("Dhurrrrrrrrrrrrrrrrrrrrrrrr paglaaaaa");
+            console.error(err)
         })
 }]);

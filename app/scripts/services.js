@@ -4,7 +4,7 @@ angular.module('angularRestfulAuth')
     .factory('Main', ['$http', '$localStorage', function($http, $localStorage){
         var baseUrl = "http://localhost:3000";
         return {
-           save: function(data, success, error) {
+           addUser: function(data, success, error) {
                 $http.post(baseUrl + '/api/users', data).success(success).error(error)
             },
             signin: function(data, success, error) {

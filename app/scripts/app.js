@@ -9,16 +9,23 @@ angular.module('angularRestfulAuth', [
 
     $routeProvider.
         when('/', {
-            templateUrl: 'partials/home.html',
-            controller: 'HomeCtrl'
+            templateUrl: 'partials/me.html',
+            controller: 'MeCtrl'
         }).
         when('/signin', {
             templateUrl: 'partials/signin.html',
             controller: 'LoginController'
         }).
-        when('/signup', {
+        when('/addUser', {
+            templateUrl: 'partials/addUser.html',
+            controller: 'AddUserController'
+        }).
+         when('/addedUser', {
+            templateUrl: 'partials/addedUser.html',
+        }).
+        when('/addDevice', {
             templateUrl: 'partials/signup.html',
-            controller: 'HomeCtrl'
+            controller: 'AddDeviceController'
         }).
         when('/me', {
             templateUrl: 'partials/me.html',
@@ -26,7 +33,10 @@ angular.module('angularRestfulAuth', [
         }).
         when('/logout',{
             templateUrl : 'partials/logout.html',
-            controller: 'HomeCtrl'
+            controller: 'LogoutController'
+        }).
+        when('/about',{
+            templateUrl : 'partials/about.html',
         }).
         otherwise({
             redirectTo: '/'

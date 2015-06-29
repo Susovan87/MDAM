@@ -2,7 +2,7 @@
 
 angular.module('angularRestfulAuth')
     .factory('Main', ['$http', '$localStorage', function($http, $localStorage){
-        var baseUrl = "http://localhost:3001";
+        var baseUrl = "http://localhost:3000";
         /*function changeUser(user) {
             angular.extend(currentUser, user);
         }*/
@@ -37,9 +37,9 @@ angular.module('angularRestfulAuth')
         var currentUser = getUserFromToken();
         */
         return {
-           /* save: function(data, success, error) {
-                $http.post(baseUrl + '/signin', data).success(success).error(error)
-            },*/
+           save: function(data, success, error) {
+                $http.post(baseUrl + '/api/users', data).success(success).error(error)
+            },
             signin: function(data, success, error) {
                 $http.post(baseUrl + '/authenticate', data).success(success).error(error)
             },

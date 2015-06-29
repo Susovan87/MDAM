@@ -4,6 +4,7 @@ var logger      = require('morgan');
 var cookieParser = require('cookie-parser');
 var app         = express();
 var debug       = require('debug')('app');
+var path        = require('path');
 
 var port = process.env.PORT || 3001;
 

@@ -25,6 +25,7 @@ fs
     return (file.indexOf(".") !== 0) && (file !== "index.js");
   })
   .forEach(function(file) {
+    console.log(file);
     var model = sequelize["import"](path.join(__dirname, file));
     db[model.name] = model;
   });
@@ -39,4 +40,3 @@ db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
 module.exports = db;
-debug('models loaded..');

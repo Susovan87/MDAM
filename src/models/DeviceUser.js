@@ -15,9 +15,17 @@ module.exports = function(sequelize, DataTypes) {
 		},
 		nextId: {
 			type: DataTypes.INTEGER
+			
 		}
 	}, {
-		timestamps: false
+		timestamps: false,
+		classMethods: {
+			associate: function(models) {
+				DeviceUser.hasOne(DeviceUser, {
+		          as: 'next'
+		        });
+			}
+		}
 	});
 
 	return DeviceUser;

@@ -47,13 +47,23 @@ module.exports = function(sequelize, DataTypes) {
           )
         }).then(function(user){
           if(user){
-            callback(null, user.id);
+            callback(null, user.getJsonData());
           }else{
             callback('wrong password');
           }
         }).catch(function (err) {
           callback(err);
         });
+      }
+    },
+    instanceMethods: {
+      getJsonData: function() {
+        var user = this.toJSON();
+        delete user['password'];
+        delete user['createdAt'];
+        delete user['updatedAt'];
+        delete user['deletedAt'];
+        return user;
       }
     }
   });

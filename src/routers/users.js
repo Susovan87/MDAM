@@ -16,9 +16,9 @@ router.get('/:userId', function(req, res) {
   models.User.find({
     where: {
       id: req.params.userId
-    },attributes: ['id','name','userName','email']
-  }).then(function(users) {
-      res.send(users);
+    }
+  }).then(function(user) {
+      res.send(user.getJsonData());
     });
 });
 
@@ -31,11 +31,7 @@ router.post('/', function(req, res) {
       password: req.body.password
     }).then(function(user) {
       if(user){
-        user = user.toJSON();
-        delete user['password'];
-        delete user['createdAt'];
-        delete user['updatedAt'];
-        delete user['deletedAt'];
+        user = user.getJsonData();
         res.status(201).send(user);
       }else{
         res.status(400).send('Failed to create user, please try after some time.');

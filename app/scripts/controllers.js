@@ -28,11 +28,33 @@ angular.module('angularRestfulAuth')
             })
         };
     }])
+.controller('SignupController',['$rootScope','$scope','$location','$localStorage','$window','Main',function($rootScope, $scope, $location, $localStorage,$window,Main){
+   $scope.signup = function() {
+            var formData = {
+                email: $scope.email,
+                password: $scope.password
+            }
+
+            Main.save(formData, function(res) {
+                if (res.type == false) {
+                    alert(res.data)
+                } else {
+                    $localStorage.token = res.data.token;
+                    window.location = "/"    
+                }
+            }, function(err) {
+                $rootScope.error = 'Failed to signup ' + err;
+            })
+        };
+    }])
+
 .controller('MeCtrl', ['$rootScope', '$scope', '$location','$localStorage','$http','Main', function($rootScope, $scope, $location,$localStorage ,$http,Main) {
         Main.me(function(res) {
-            console.log(res+"Hellllloooooo");
-        }, function() {
+            $scope.user = res;
+            if(!$scope.email)
+                $scope.email = '-';
+        }, function(err) {
             $rootScope.error = 'Failed to fetch details';
-            console.log("Dhurrrrrrrrrrrrrrrrrrrrrrrr paglaaaaa");
+            console.error(err)
         })
 }]);

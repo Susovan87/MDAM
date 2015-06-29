@@ -23,7 +23,8 @@ router.post('/', function (req, res) {
             	res.json({
                     type: true,
                     token: token,
-                    expires: expires
+                    expires: expires,
+                    userId: userId
                 }); 
             } else {
                 res.status(403).json({

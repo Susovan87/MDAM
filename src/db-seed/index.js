@@ -20,8 +20,20 @@ module.exports = function(models) {
 	    		}
 			}).spread(function(user, created){
 				user.addRoles([adminRole,poolUserRole]);
+				models.Device.findOrCreate({
+					where: {
+						identifier: 'lxk123'
+					}
+				}).spread(function(device,created){
+					models.DeviceUser.findOrCreate({
+						where: {
+							userId: user.id,
+							deviceId: device.id
+						}
+					});	
+					
+				});
+				});
 			});
 		});
-	});
-	
-};
+	};

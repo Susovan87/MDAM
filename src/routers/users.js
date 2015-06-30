@@ -79,4 +79,26 @@ router.delete('/:userId', function(req, res) {
   }
 });
 
+
+router.get('/:userId/devices', function(req, res) {
+  models.User.find({
+    where: {
+      id: req.params.userId
+     }
+  }).then(function(user) {
+     user.getDevices({
+      attributes: ['id', 'identifier', 'model', 'os']
+      ,joinTableAttributes: ['allocatedAt']
+     }).then(function(devices){
+        if(!devices)
+            res.status(404).send("No devices allocated")
+        else
+          res.send(devices);
+      })
+    }).catch(function(err) {
+      res.status(400).send(err.message);
+    });
+});
+
+
 module.exports = router;

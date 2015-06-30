@@ -24,6 +24,12 @@ module.exports = function(sequelize, DataTypes) {
           foreignKey: 'deviceId'
         });
       }
+    },
+    defaultScope: {
+      where: {
+        deletedAt: null
+      },
+      attributes: ['id', 'identifier', 'model', 'os']
     }
   });
 

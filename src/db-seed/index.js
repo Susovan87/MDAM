@@ -9,7 +9,7 @@ module.exports = function(models) {
 			where: {
 				roleType: 'PoolUser'
 			}
-		}).spread(function (poolUserRole, created) {
+		}).spread(function(poolUserRole, created) {
 			models.User.findOrCreate({
 				where: {
 					userName: 'admin'
@@ -17,23 +17,25 @@ module.exports = function(models) {
 				defaults: {
 					name: 'Admin',
 					password: 'admin'
-	    		}
-			}).spread(function(user, created){
-				user.addRoles([adminRole,poolUserRole]);
-				models.Device.findOrCreate({
-					where: {
-						identifier: 'lxk123'
-					}
-				}).spread(function(device,created){
-					models.DeviceUser.findOrCreate({
+				}
+			}).spread(function(user, created) {
+				user.addRoles([adminRole, poolUserRole]).then(function() {
+					models.Device.findOrCreate({
 						where: {
-							userId: user.id,
-							deviceId: device.id
+							identifier: 'lxk123'
 						}
-					});	
-					
+					}).spread(function(device, created) {
+						models.DeviceUser.findOrCreate({
+							where: {
+								userId: user.id,
+								deviceId: device.id
+							}
+						});
+
+					});
 				});
-				});
+
 			});
 		});
-	};
+	});
+};

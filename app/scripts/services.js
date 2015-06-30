@@ -10,9 +10,12 @@ angular.module('angularRestfulAuth')
             signin: function(data, success, error) {
                 $http.post(baseUrl + '/authenticate', data).success(success).error(error)
             },
-            me: function(success, error) {
+            getUsers: function(success, error) {
                 $http.get(baseUrl + '/api/users').success(success).error(error)
-            }
+            },
+            deleteUser: function(id, success, error) {
+                $http.delete(baseUrl + '/api/users/'+id).success(success).error(error)
+            },
         };
     }
 ]);

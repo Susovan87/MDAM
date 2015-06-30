@@ -79,13 +79,25 @@ angular.module('angularRestfulAuth')
         $location.path('/signin');
     }
 }])
-.controller('UserListController', ['$rootScope', '$scope', '$location','$localStorage','$http','Main', function($rootScope, $scope, $location,$localStorage ,$http,Main) {
-     $scope.users = [{name:"User1",email:"emal1",userName:"userName1",id:"1"},{name:"User2",email:"emal2",userName:"userName2",id:"2"},{name:"User3",email:"emal3",userName:"userName3",id:"3"}]
+.controller('UserListController', ['$route','$rootScope', '$scope', '$location','$localStorage','$http','Main', function($route,$rootScope, $scope, $location,$localStorage ,$http,Main) {
+     //$rootScope.users = [{name:"User1",email:"emal1",userName:"userName1",id:"1"},{name:"User2",email:"emal2",userName:"userName2",id:"2"},{name:"User3",email:"emal3",userName:"userName3",id:"3"}]
+     Main.getUsers(function(res) {
+         $scope.users = res;
+         console.log(res);
+     },function(err){
+          console.error(err);
+     });
      $scope.editUser = function(person){
         console.log(person.id);
      }
      $scope.deleteUser = function(person){
         console.log(person.id);
+        Main.deleteUser(person.id,function(res){
+            console.log(res);
+            $route.reload();
+        },function(err){
+            console.log(err);
+        });
      }
 }])
 .controller('AddUserController', ['$rootScope', '$scope', '$location','$localStorage','$http','Main', function($rootScope, $scope, $location,$localStorage ,$http,Main) {

@@ -65,6 +65,12 @@ module.exports = function(sequelize, DataTypes) {
         delete user['deletedAt'];
         return user;
       }
+    },
+    defaultScope: {
+        where: {
+          deletedAt: null
+        },
+        attributes: ['id','userName','name','email']
     }
   });
 

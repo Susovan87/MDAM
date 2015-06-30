@@ -2,6 +2,11 @@
 
 module.exports = function(sequelize, DataTypes) {
 	var DeviceUser = sequelize.define("DeviceUser", {
+		id: { 
+			type: DataTypes.INTEGER,
+			autoIncrement: true,
+			primaryKey: true
+		},
 		allocatedAt: {
 			type: DataTypes.DATE,
 			defaultValue: DataTypes.NOW,
@@ -13,7 +18,7 @@ module.exports = function(sequelize, DataTypes) {
 		verifiedBy: {
 			type: DataTypes.INTEGER
 		},
-		nextId: {
+		previousId: {
 			type: DataTypes.INTEGER
 		}
 	}, {
@@ -21,14 +26,15 @@ module.exports = function(sequelize, DataTypes) {
 		classMethods: {
 			associate: function(models) {
 				DeviceUser.hasOne(DeviceUser, {
-		          as: 'next'
+		          as: 'previous'
 		        });
 			}
 		},
 		defaultScope: {
 		    where: {
-		      nextId: null
-		    }
+		      deAllocatedAt: null
+		    },
+		    attributes: ['allocatedAt']
 		}
 	});
 

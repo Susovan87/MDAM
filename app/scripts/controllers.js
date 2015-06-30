@@ -79,6 +79,15 @@ angular.module('angularRestfulAuth')
         $location.path('/signin');
     }
 }])
+.controller('UserListController', ['$rootScope', '$scope', '$location','$localStorage','$http','Main', function($rootScope, $scope, $location,$localStorage ,$http,Main) {
+     $scope.users = [{name:"User1",email:"emal1",userName:"userName1",id:"1"},{name:"User2",email:"emal2",userName:"userName2",id:"2"},{name:"User3",email:"emal3",userName:"userName3",id:"3"}]
+     $scope.editUser = function(person){
+        console.log(person.id);
+     }
+     $scope.deleteUser = function(person){
+        console.log(person.id);
+     }
+}])
 .controller('AddUserController', ['$rootScope', '$scope', '$location','$localStorage','$http','Main', function($rootScope, $scope, $location,$localStorage ,$http,Main) {
     $scope.addUser = function() {
             var formData = {
@@ -95,5 +104,5 @@ angular.module('angularRestfulAuth')
                 $scope.error = 'Failed to addUser ' + err;
                 console.error($scope.error);
             })
-        };
+    };
 }])    

@@ -38,6 +38,9 @@ angular.module('angularRestfulAuth', [
         when('/about',{
             templateUrl : 'partials/about.html',
         }).
+        when('/userList',{
+            templateUrl : 'partials/userList.html',
+        }).
         otherwise({
             redirectTo: '/'
         });
@@ -61,7 +64,14 @@ angular.module('angularRestfulAuth', [
         }]);
        
     }
-]);/*.
+])
+.directive('myPostRepeat', function() {
+  return function(scope, element, attrs) {
+    if (scope.$last){
+        console.log(attrs);
+    }
+  };
+});/*.
 run(function($http){
     $http.defaults.headers.common.token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOjEsImV4cGlyZXMiOjE0MzYwMjI3NTYxOTN9.xx3Y_DxuC4ZK3hQ9dwBB3Pg5E3DMFYAvkxaMvIrM_Ws';
 });*/

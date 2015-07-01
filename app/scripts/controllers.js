@@ -40,6 +40,7 @@ angular.module('angularRestfulAuth')
                     if(res.userName=='admin')
                         res.isAdmin = true;
                     $rootScope.token = $localStorage.token
+                    $rootScope.isAdmin = res.isAdmin;
 
                     $location.path('/me');    
                 }
@@ -89,10 +90,71 @@ angular.module('angularRestfulAuth')
      });
      $scope.editUser = function(person){
         console.log(person.id);
+        $rootScope.editUser = person;
+        $location.path('/editUser');
      }
      $scope.deleteUser = function(person){
         console.log(person.id);
         Main.deleteUser(person.id,function(res){
+            console.log(res);
+            $route.reload();
+        },function(err){
+            console.log(err);
+        });
+     }
+}])
+.controller('EditUserController', ['$route','$rootScope', '$scope', '$location','$localStorage','$http','Main', function($route,$rootScope, $scope, $location,$localStorage ,$http,Main) {
+    var pass = $scope.password=='DummyValue'?null:$scope.password;
+     var id = $rootScope.editUser.id;
+    
+    $scope.save = function() {
+        var formData = {
+            name: $scope.name,
+            userName: $scope.userName,
+            email: $scope.email,
+            password: pass
+        };
+        Main.editUser(id,editedUser,function(res) {
+            if($rootScope.user.id == $rootScope.editUser.id){
+                $rootScope.user = $rootScope.editUser;
+                $location.path('/me');
+            }
+            else{
+                $location.path('/userList');
+            }
+        },function(err){
+          $scope.error = err;
+        });
+    }
+    $scope.editUser = function(person){
+        console.log(person.id);
+        $rootScope.editUser = person;
+        $location.path('/editUser');
+    }
+    $scope.deleteUser = function(person){
+        console.log(person.id);
+        Main.deleteUser(person.id,function(res){
+            console.log(res);
+            $route.reload();
+        },function(err){
+            console.log(err);
+        });
+    }
+}])
+.controller('DeviceListController', ['$route','$rootScope', '$scope', '$location','$localStorage','$http','Main', function($route,$rootScope, $scope, $location,$localStorage ,$http,Main) {
+     //$rootScope.users = [{name:"User1",email:"emal1",userName:"userName1",id:"1"},{name:"User2",email:"emal2",userName:"userName2",id:"2"},{name:"User3",email:"emal3",userName:"userName3",id:"3"}]
+     Main.getDevices(function(res) {
+         $scope.devices = res;
+         console.log(res);
+     },function(err){
+          console.error(err);
+     });
+     $scope.editDevice = function(device){
+        console.log(device.id);
+     }
+     $scope.deleteDevice = function(device){
+        console.log(device.id);
+        Main.deleteDevice(device.id,function(res){
             console.log(res);
             $route.reload();
         },function(err){
@@ -113,8 +175,27 @@ angular.module('angularRestfulAuth')
                 $rootScope.addedUser = res;
                 $location.path('/addedUser');
             }, function(err) {
-                $scope.error = 'Failed to addUser ' + err;
+                $scope.error = 'Failed to add User ' + err;
                 console.error($scope.error);
             })
     };
-}])    
+}])
+.controller('AddDeviceController', ['$rootScope', '$scope', '$location','$localStorage','$http','Main', function($rootScope, $scope, $location,$localStorage ,$http,Main) {
+    $scope.addDevice = function() {
+            var formData = {
+                identifier: $scope.identifier,
+                model: $scope.model,
+                os: $scope.os,
+                version: $scope.version,
+                IMEI : $scope.IMEI
+            }
+
+            Main.addDevice(formData, function(res) {
+                $rootScope.addedDevice = res;
+                $location.path('/addedDevice');
+            }, function(err) {
+                $scope.error = 'Failed to add Device' + err;
+                console.error($scope.error);
+            })
+    };
+}]);    

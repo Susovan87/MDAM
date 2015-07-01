@@ -1,26 +1,49 @@
 
+
 <div class="col-xs-7">
     <div class="panel panel-primary">
         <div class="panel-heading">
-            <strong>Signup</strong>
+            <strong>Add Device</strong>
         </div>
-        <div class="panel-body">
-            <form class="form-horizontal" role="form" ng-submit="signup()">
+        <div class="panel-body" >
+            <div class="alert alert-danger fade in" data-ng-show="error">
+                <a ng-href="" class="close" data-dismiss="alert">&times;</a>
+                <strong>Error!</strong> A problem has occurred while adding device.
+            </div>
+            <form class="form-horizontal" role="form" ng-submit="addDevice()">
                 <div class="form-group">
-                    <label for="email" class="col-sm-2 control-label">Email</label>
+                    <label for="identifier" class="col-sm-2 control-label">Identifier</label>
                     <div class="col-sm-10">
-                        <input type="email" class="form-control" id="email" name="email" placeholder="Email" ng-model="email">
+                        <input type="text" class="form-control" id="identifier" name="identifier" placeholder="Identifier" ng-model="identifier" required>
+                    </div>
+                </div>
+                 <div class="form-group">
+                    <label for="model" class="col-sm-2 control-label">Model</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="model" name="model" placeholder="model" ng-model="model" required>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="password" class="col-sm-2 control-label">Password</label>
+                    <label for="os" class="col-sm-2 control-label">OS</label>
                     <div class="col-sm-10">
-                        <input type="password" class="form-control" id="password" name="password" placeholder="Password" ng-model="password">
+                        <input type="text" class="form-control" id="os" name="os" placeholder="OS" ng-model="os" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="version" class="col-sm-2 control-label">Version</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="version" name="version" placeholder="Version" ng-model="version" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="IMEI" class="col-sm-2 control-label">IMEI</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="IMEI" name="IMEI" placeholder="IMEI" ng-model="IMEI" required>
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="col-sm-offset-2 col-sm-10">
-                        <button type="submit" class="btn btn-default">Sign up</button>
+                        <button type="submit" class="btn btn-default">Add</button>
                     </div>
                 </div>
             </form>

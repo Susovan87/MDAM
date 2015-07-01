@@ -20,11 +20,14 @@ angular.module('angularRestfulAuth', [
             templateUrl: 'partials/addUser.html',
             controller: 'AddUserController'
         }).
-         when('/addedUser', {
+        when('/addedUser', {
             templateUrl: 'partials/addedUser.html',
         }).
+        when('/addedDevice', {
+            templateUrl: 'partials/addedDevice.html',
+        }).
         when('/addDevice', {
-            templateUrl: 'partials/signup.html',
+            templateUrl: 'partials/addDevice.html',
             controller: 'AddDeviceController'
         }).
         when('/me', {
@@ -40,6 +43,13 @@ angular.module('angularRestfulAuth', [
         }).
         when('/userList',{
             templateUrl : 'partials/userList.html',
+        }).
+        when('/deviceList',{
+            templateUrl : 'partials/deviceList.html',
+        }).
+        when('/editUser',{
+            templateUrl : 'partials/editUser.html',
+            controller: 'EditUserController'
         }).
         otherwise({
             redirectTo: '/'
@@ -65,12 +75,17 @@ angular.module('angularRestfulAuth', [
        
     }
 ])
-.directive('myPostRepeat', function() {
-  return function(scope, element, attrs) {
-    if (scope.$last){
-        console.log(attrs);
-    }
-  };
+.directive('tooltip', function(){
+    return {
+        restrict: 'A',
+        link: function(scope, element, attrs){
+           
+                $(element)
+                .attr('title',scope.$eval(attrs.tooltip))
+                .tooltip({placement: "right"});
+            
+        }
+    };
 });/*.
 run(function($http){
     $http.defaults.headers.common.token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOjEsImV4cGlyZXMiOjE0MzYwMjI3NTYxOTN9.xx3Y_DxuC4ZK3hQ9dwBB3Pg5E3DMFYAvkxaMvIrM_Ws';

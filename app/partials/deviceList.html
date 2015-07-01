@@ -1,0 +1,71 @@
+<link href="lib/adminTable.css" rel="stylesheet">
+<script src="//cdnjs.cloudflare.com/ajax/libs/angular-strap/2.1.2/angular-strap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/angular-strap/2.1.2/angular-strap.tpl.min.js"></script>
+<div class="col-xs-7" ng-controller="DeviceListController">
+     <div class="panel panel-primary">
+        <div class="panel-heading">
+            <strong>Device List</strong>
+        </div>
+        <div class="panel-body">
+            <div class="well col-sm-12 col-md-8 col-md-offset-2">
+                    <div name ="deviceElement" ng-repeat="device in devices">
+                        <div class="row user-row">
+                            <div class="col-md-10">
+                                <strong>{{device.model}} </strong><br>
+                                 <span class="text-muted">{{device.os}} {{device.version}}</span>
+                            </div>
+                        </div>
+                        
+                        <!-- Add data-for class to this row -->
+                        <div class="row user-infos ">
+                            <div class="col-sm-10 col-md-10 col-md-offset-1">
+                                <div class="panel panel-primary">
+                                    <div class="panel-heading">
+                                        <h3 class="panel-title">Device information</h3>
+                                    </div>
+                                    <div class="panel-body">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <strong>{{device.model}}</strong><br>
+                                                <table class="table table-condensed table-responsive table-user-information">
+                                                    <tbody>
+                                                    <tr>
+                                                        <td>ID: </td>
+                                                        <td>{{device.id}}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>IMEI No(s): </td>
+                                                        <td>{{device.IMEI}}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>OS: </td>
+                                                        <td>{{device.os}}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Version:</td>
+                                                        <td>{{device.version}}</td>
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="panel-footer">
+                                       <button class="btn btn-sm btn-warning" type="button"
+                                                    data-toggle="tooltip"
+                                                    title="Edit this user"  data-trigger="hover" data-placement="right"><i class="glyphicon glyphicon-edit" ng-click="editDevice(device)" ></i></button>
+                                        <span class="pull-right">
+                                            
+                                            <button class="btn btn-sm btn-danger" type="button"
+                                                    data-toggle="tooltip"
+                                                    data-original-title="Remove this user"><i class="glyphicon glyphicon-remove" ng-click="deleteDevice(device)"></i></button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </div>
+</div>
